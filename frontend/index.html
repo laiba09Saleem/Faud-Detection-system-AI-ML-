@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow">Fraud Monitoring Workspace</p>
+                <h1>Operational fraud intelligence for high-volume transaction streams.</h1>
+                <p class="hero-text">
+                    Generate synthetic traffic, inspect anomaly spikes, and monitor risk posture through a cleaner
+                    analyst-style dashboard.
+                </p>
+            </div>
+            <div class="hero-panel">
+                <div class="hero-metric">
+                    <span class="metric-label">System Status</span>
+                    <strong id="system-status">Connected</strong>
+                </div>
+                <div class="hero-metric">
+                    <span class="metric-label">Active Threshold</span>
+                    <strong id="active-threshold">0.05</strong>
+                </div>
+                <div class="hero-metric">
+                    <span class="metric-label">Expected Lambda</span>
+                    <strong id="active-lambda">5</strong>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <section class="toolbar card">
+                <div class="toolbar-block">
+                    <h2>Simulation Controls</h2>
+                    <p>Run realistic transaction scenarios and update detection sensitivity without touching the backend.</p>
+                </div>
+                <div class="toolbar-actions">
+                    <div class="field-group">
+                        <label for="minutes">Minutes</label>
+                        <input type="number" id="minutes" min="10" max="500" step="10" value="120">
+                    </div>
+                    <div class="field-group">
+                        <label for="threshold">Threshold</label>
+                        <input type="number" id="threshold" min="0.001" max="0.5" step="0.001" value="0.05">
+                    </div>
+                    <div class="field-group">
+                        <label for="lambda">Lambda</label>
+                        <input type="number" id="lambda" min="1" max="20" step="1" value="5">
+                    </div>
+                    <div class="button-row">
+                        <button id="generate-btn" class="btn btn-primary">Generate Data</button>
+                        <button id="detect-btn" class="btn btn-secondary">Run Detection</button>
+                        <button id="reset-btn" class="btn btn-ghost">Reset</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stats-grid">
+                <article class="card stat-card">
+                    <span class="section-label">Total Volume</span>
+                    <strong id="stat-total" class="stat-number">0</strong>
+                    <p id="stat-average" class="muted">Average per minute: 0.00</p>
+                </article>
+                <article class="card stat-card">
+                    <span class="section-label">Detected Anomalies</span>
+                    <strong id="stat-anomalies" class="stat-number">0</strong>
+                    <p id="stat-detection-rate" class="muted">Detection rate: 0.0%</p>
+                </article>
+                <article class="card stat-card">
+                    <span class="section-label">Peak Activity</span>
+                    <strong id="stat-peak" class="stat-number">0</strong>
+                    <p id="stat-range" class="muted">Minimum: 0</p>
+                </article>
+            </section>
+
+            <section class="content-grid">
+                <article class="card chart-card">
+                    <div class="card-header">
+                        <div>
+                            <span class="section-label">Volume Timeline</span>
+                            <h2>Transaction activity over time</h2>
+                        </div>
+                    </div>
+                    <div class="chart-wrap">
+                        <canvas id="transactionChart"></canvas>
+                    </div>
+                </article>
+
+                <article class="card risk-card">
+                    <div class="card-header">
+                        <div>
+                            <span class="section-label">Risk Assessment</span>
+                            <h2>Current fraud posture</h2>
+                        </div>
+                    </div>
+                    <div class="risk-meter">
+                        <div id="risk-fill" class="risk-fill">0%</div>
+                    </div>
+                    <p id="risk-level" class="risk-level">Awaiting analysis</p>
+                    <p id="risk-recommendation" class="muted">Generate and analyze data to see the current recommendation.</p>
+                </article>
+
+                <article class="card anomalies-card">
+                    <div class="card-header">
+                        <div>
+                            <span class="section-label">Incident Queue</span>
+                            <h2>Flagged activity</h2>
+                        </div>
+                    </div>
+                    <div id="anomaly-list" class="anomaly-list">
+                        <div class="empty-state">No anomalies detected yet.</div>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast-root" class="toast-root"></div>
+    <script src="./app.js"></script>
+</body>
+</html>
